@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { Logo } from "@/components/logo";
 import { 
   ArrowRight, 
   Activity, 
@@ -13,6 +14,7 @@ import {
   X, 
   ChevronRight, 
   Play,
+  Mic,
   Twitter,
   Linkedin,
   Instagram,
@@ -120,177 +122,224 @@ function SmoothScrollProgress() {
   );
 }
 
-function Navbar() {
+// Helper component for links with animated underline
+const NavLink: React.FC<{ href: string; children: React.ReactNode; className?: string; onClick?: () => void }> = ({ href, children, className = "", onClick }) => {
+  return (
+    <a 
+      href={href} 
+      onClick={onClick}
+      className={`relative group inline-block text-sm font-medium text-gray-600 hover:text-black transition-colors px-1 ${className}`}
+    >
+      {children}
+      <span className="absolute -bottom-1 left-0 w-0 h-[2px] rounded-full bg-slaq-green transition-all duration-300 ease-out group-hover:w-full" />
+    </a>
+  );
+};
+
+export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "py-4 bg-black/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:rotate-12">
-             <span className="font-bold text-black text-xl">S</span>
-          </div>
-          <span className="font-bold text-2xl tracking-tight text-white">Slaq.ai</span>
-        </Link>
-        
-        <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-zinc-400">
-          <Link href="#problem" className="hover:text-white transition-colors relative group">
-            Problem
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#9DDB2C] transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#solution" className="hover:text-white transition-colors relative group">
-            Solution
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#9DDB2C] transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#testimonials" className="hover:text-white transition-colors relative group">
-            Testimonials
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#9DDB2C] transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#faq" className="hover:text-white transition-colors relative group">
-            FAQ
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#9DDB2C] transition-all duration-300 group-hover:w-full" />
-          </Link>
-          <Link href="#contact" className="hover:text-white transition-colors relative group">
-            Contact
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#9DDB2C] transition-all duration-300 group-hover:w-full" />
-          </Link>
-        </nav>
-        
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="text-white hover:text-[#9DDB2C] hover:bg-white/5">Log In</Button>
-          <Button className="bg-[#9DDB2C] text-black hover:bg-[#8bc325] rounded-full px-6 font-semibold transition-all duration-300 hover:scale-105">
-            Get Early Access
-          </Button>
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 pointer-events-none">
+      <motion.nav
+        layout
+        initial={{ width: '100%', borderRadius: '24px' }}
+        animate={{ 
+          width: '100%',
+          maxWidth: isScrolled && !mobileMenuOpen ? '850px' : '1200px',
+          backgroundColor: isScrolled || mobileMenuOpen ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0)',
+          backdropFilter: isScrolled || mobileMenuOpen ? 'blur(16px)' : 'blur(0px)',
+          borderWidth: isScrolled || mobileMenuOpen ? '1px' : '0px',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+          borderRadius: mobileMenuOpen ? '32px' : '9999px',
+          boxShadow: isScrolled || mobileMenuOpen ? '0 10px 40px -10px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.02)' : 'none',
+        }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 200, 
+          damping: 25,
+          mass: 0.8 
+        }}
+        className="pointer-events-auto overflow-hidden relative"
+      >
+        <div className={`flex items-center justify-between px-6 md:px-8 transition-all duration-300 ${isScrolled || mobileMenuOpen ? 'py-3' : 'py-5'}`}>
+            
+            <Link href="/" className="flex items-center gap-2 group pointer-events-auto">
+              <Logo className="scale-90 md:scale-100 origin-left transition-transform" />
+            </Link>
+
+            {/* Desktop Links - Centered visually in the compact mode */}
+            <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+               <div className="pointer-events-auto"><NavLink href="#problem">Problem</NavLink></div>
+               <div className="pointer-events-auto"><NavLink href="#solution">How it Works</NavLink></div>
+               <div className="pointer-events-auto"><NavLink href="#testimonials">Testimonials</NavLink></div>
+               <div className="pointer-events-auto"><NavLink href="#faq">FAQ</NavLink></div>
+               <div className="pointer-events-auto"><NavLink href="#contact">Contact</NavLink></div>
+            </div>
+
+            {/* Desktop Action */}
+            <div className="hidden md:flex items-center">
+                 <Button 
+                    variant="primary" 
+                    size="sm" 
+                    onClick={() => window.open('https://slaq.neuraq.in', '_blank')} 
+                    className="h-10 px-6 text-sm"
+                 >
+                  Join Early Access
+                </Button>
+            </div>
+
+            {/* Mobile Toggle */}
+            <button 
+              className="md:hidden p-2 text-black bg-gray-50 hover:bg-gray-100 rounded-full transition-colors pointer-events-auto"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
         </div>
 
-        <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {mobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute top-full left-0 right-0 bg-black border-b border-white/10 p-6 md:hidden flex flex-col gap-4"
-        >
-          <Link href="#problem" className="text-zinc-400 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>Problem</Link>
-          <Link href="#solution" className="text-zinc-400 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>Solution</Link>
-          <Link href="#testimonials" className="text-zinc-400 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>Testimonials</Link>
-          <Link href="#faq" className="text-zinc-400 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
-          <Link href="#contact" className="text-zinc-400 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
-          <Button className="bg-[#9DDB2C] text-black w-full mt-4">Get Started</Button>
-        </motion.div>
-      )}
-    </header>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden px-6 pb-8 pt-2"
+              >
+                <div className="flex flex-col gap-6 items-center text-center">
+                  <NavLink href="#problem" onClick={() => setMobileMenuOpen(false)} className="text-lg">Problem</NavLink>
+                  <NavLink href="#solution" onClick={() => setMobileMenuOpen(false)} className="text-lg">How it Works</NavLink>
+                  <div className="w-full h-px bg-gray-100" />
+                  <Button className="w-full" onClick={() => window.open('https://slaq.neuraq.in', '_blank')}>
+                    Join Early Access
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+        </AnimatePresence>
+      </motion.nav>
+    </div>
   );
-}
+};
 
-function Hero() {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
+export const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 bg-black text-white overflow-hidden selection:bg-[#9DDB2C] selection:text-black">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#9DDB2C]/5 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-soft-light" />
-      </div>
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
+      
+      {/* Background Elements */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-50 via-white to-white" />
+      
+      {/* Animated Floating Blobs */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-200/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+      <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-slaq-green/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+      <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-blue-200/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
 
-      <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 1440 800" preserveAspectRatio="none">
-           <motion.path 
-             d="M0,400 C240,300 480,500 720,400 C960,300 1200,500 1440,400 V800 H0 Z" 
-             fill="url(#grad1)"
-             initial={{ d: "M0,400 C240,400 480,400 720,400 C960,400 1200,400 1440,400 V800 H0 Z" }}
-             animate={{ 
-               d: [
-                 "M0,400 C240,300 480,500 720,400 C960,300 1200,500 1440,400 V800 H0 Z",
-                 "M0,400 C240,500 480,300 720,400 C960,500 1200,300 1440,400 V800 H0 Z",
-                 "M0,400 C240,300 480,500 720,400 C960,300 1200,500 1440,400 V800 H0 Z"
-               ]
-             }}
-             transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-           />
-           <defs>
-             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-               <stop offset="0%" stopColor="rgba(157, 219, 44, 0)" />
-               <stop offset="50%" stopColor="rgba(157, 219, 44, 0.1)" />
-               <stop offset="100%" stopColor="rgba(157, 219, 44, 0)" />
-             </linearGradient>
-           </defs>
-        </svg>
-      </div>
-
-      <motion.div 
-        className="relative z-10 max-w-6xl mx-auto text-center space-y-10"
-        style={{ y: y1, opacity }}
-        initial="initial"
-        animate="animate"
-        variants={staggerContainer}
-      >
-        <motion.div variants={fadeIn} className="flex justify-center">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer group">
-            <span className="w-2 h-2 rounded-full bg-[#9DDB2C] animate-pulse" />
-            <span className="text-sm font-medium text-zinc-300 group-hover:text-white transition-colors">Redefining Speech Therapy</span>
-            <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
-          </div>
+      <div className="max-w-4xl mx-auto px-6 text-center z-10">
+        
+        {/* Animated Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 mb-8 shadow-sm"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slaq-green opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-slaq-green"></span>
+          </span>
+          <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Now in Beta</span>
         </motion.div>
 
-        <motion.h1 variants={fadeIn} className="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500">
-          Smart Linguistic <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9DDB2C] to-emerald-400">Adaptive Intelligence</span>
+        {/* Headlines */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-5xl md:text-7xl font-bold tracking-tighter text-slaq-black mb-6 leading-[1.1]"
+        >
+          Smart Linguistic <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-l text-slaq-black to-gray-400">Adaptive Intelligence.</span>
         </motion.h1>
-        
-        <motion.p variants={fadeIn} className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto leading-relaxed font-light">
-          AI-powered speech therapy that adapts to every voice. <br className="hidden md:block" />
-          Precision diagnosis and personalized pathways in real-time.
+
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
+          AI-powered speech therapy that adapts to every voice. 
+          Real-time analysis, personalized insights, and continuous care.
         </motion.p>
 
-        <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
-          <Button size="lg" className="rounded-full h-16 px-10 text-lg bg-[#9DDB2C] text-black hover:bg-[#8bc325] font-bold transition-transform hover:scale-105 shadow-[0_0_40px_-10px_rgba(157,219,44,0.5)]">
-            Start Assessment <ArrowRight className="ml-2 w-5 h-5" />
+        {/* CTA */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Button size="lg" className="group" onClick={() => window.open('https://slaq.neuraq.in', '_blank')}>
+            Join Early Access
+            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
-          <div className="flex items-center gap-4 group cursor-pointer">
-            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-white/10 transition-all">
-              <Play className="w-6 h-6 text-white fill-white ml-1" />
-            </div>
-            <span className="text-lg font-medium text-zinc-300 group-hover:text-white transition-colors">Watch Demo</span>
-          </div>
+          <Button variant="ghost" size="lg" className="text-gray-500 hover:text-black hover:bg-gray-100/50">
+            Watch Demo
+          </Button>
         </motion.div>
-      </motion.div>
 
-      <motion.div 
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-500 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-      >
-        <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
-        <div className="w-px h-12 bg-gradient-to-b from-zinc-500 to-transparent" />
-      </motion.div>
+        {/* Waveform Visualization */}
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-20 relative h-32 w-full max-w-md mx-auto flex items-end justify-center gap-1 md:gap-2"
+        >
+            {[...Array(20)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="w-2 md:w-3 rounded-full bg-slaq-black"
+                    animate={{
+                        height: ["20%", "60%", "30%", "80%", "20%"],
+                        backgroundColor: i === 9 || i === 10 ? "#9DDB2C" : "#000000"
+                    }}
+                    transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "mirror",
+                        delay: i * 0.1,
+                        ease: "easeInOut"
+                    }}
+                    style={{
+                        height: '20%',
+                        opacity: i < 5 || i > 14 ? 0.3 : 1
+                    }}
+                />
+            ))}
+             
+             {/* Floating Icon */}
+             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-4 border border-white/20 ring-1 ring-black/5">
+                <Mic className="w-8 h-8 text-slaq-green drop-shadow-sm" />
+             </div>
+        </motion.div>
+
+      </div>
     </section>
   );
-}
+};
 
 function TrustSection() {
   const partners = [
-    "TechCrunch", "Forbes", "Wired", "The Verge", "MIT Review"
+    "RAC Global" 
   ];
 
   return (
@@ -304,7 +353,7 @@ function TrustSection() {
         >
           <p className="text-sm uppercase tracking-widest text-zinc-400 font-semibold">As Featured In</p>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12 justify-center items-center">
           {partners.map((partner, i) => (
             <motion.div
               key={i}
@@ -312,9 +361,9 @@ function TrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex items-center justify-center"
+              className={`flex items-center justify-center ${partners.length === 1 ? 'col-span-2 md:col-span-5' : ''}`}
             >
-              <div className="text-2xl font-bold text-zinc-300 hover:text-zinc-900 transition-colors cursor-pointer">
+              <div className="text-2xl font-bold text-zinc-300 hover:text-zinc-900 transition-colors cursor-pointer text-center">
                 {partner}
               </div>
             </motion.div>

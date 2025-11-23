@@ -132,3 +132,52 @@
 nextjs-portal {
   display: none !important;
 }
+
+/* --- Slaq custom tokens & animations --- */
+:root {
+  /* Slaq color tokens (used by components) */
+  --slaq-black: #000000;
+  --slaq-white: #FFFFFF;
+  --slaq-green: #9DDB2C;
+  --slaq-gray: #F5F5F7;
+  --slaq-dark-gray: #1D1D1F;
+}
+
+/* Utility color helpers for classes referenced in markup */
+.bg-slaq-green { background-color: var(--slaq-green) !important; }
+.text-slaq-green { color: var(--slaq-green) !important; }
+.text-slaq-black { color: var(--slaq-black) !important; }
+.bg-slaq-black { background-color: var(--slaq-black) !important; }
+.text-slaq-white { color: var(--slaq-white) !important; }
+.bg-slaq-gray { background-color: var(--slaq-gray) !important; }
+.text-slaq-darkGray { color: var(--slaq-dark-gray) !important; }
+
+/* Keyframes */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Animation utilities (names align with provided config) */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.animate-shimmer {
+  animation: shimmer 2.5s linear infinite;
+}
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+/* Small helpers for animation delays used in markup */
+.animation-delay-2000 { animation-delay: 2s !important; }
+.animation-delay-4000 { animation-delay: 4s !important; }
+
+/* End Slaq custom tokens & animations */
