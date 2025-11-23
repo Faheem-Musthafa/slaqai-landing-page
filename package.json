@@ -5,8 +5,10 @@
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
+        "postbuild": "node ./scripts/check-next.js",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "check-next": "node ./scripts/check-next.js"
     },
     "dependencies": {
         "@babel/parser": "^7.28.5",
