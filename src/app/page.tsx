@@ -219,6 +219,9 @@ export const Navbar: React.FC = () => {
                 <div className="flex flex-col gap-6 items-center text-center">
                   <NavLink href="#problem" onClick={() => setMobileMenuOpen(false)} className="text-lg">Problem</NavLink>
                   <NavLink href="#solution" onClick={() => setMobileMenuOpen(false)} className="text-lg">How it Works</NavLink>
+                  <NavLink href="#testimonials" onClick={() => setMobileMenuOpen(false)} className="text-lg">Testimonials</NavLink>
+                  <NavLink href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-lg">FAQ</NavLink>
+                  <NavLink href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-lg">Contact</NavLink>
                   <div className="w-full h-px bg-gray-100" />
                   <Button className="w-full" onClick={() => window.open('https://slaq.neuraq.in', '_blank')}>
                     Join Early Access
