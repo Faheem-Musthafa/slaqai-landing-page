@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Icon } from "@radix-ui/react-select";
 
 const fadeIn = {
   initial: { opacity: 0, y: 30 },
@@ -379,39 +380,50 @@ function TrustSection() {
 
 function StatsSection() {
   const stats = [
-    { icon: Users, value: 50, suffix: "K+", label: "Active Users", color: "from-[#9DDB2C] to-emerald-400" },
-    { icon: TrendingUp, value: 94, suffix: "%", label: "Success Rate", color: "from-blue-400 to-cyan-400" },
-    { icon: Award, value: 15, suffix: "+", label: "Industry Awards", color: "from-purple-400 to-pink-400" },
-    { icon: Zap, value: 24, suffix: "/7", label: "AI Monitoring", color: "from-[#9DDB2C] to-yellow-400" }
+    { Icon: Users, value: 50, suffix: "K+", label: "Active Users", color: "from-[#9DDB2C] to-emerald-400" },
+    { Icon: TrendingUp, value: 94, suffix: "%", label: "Success Rate", color: "from-blue-400 to-cyan-400" },
+    { Icon: Award, value: 15, suffix: "+", label: "Industry Awards", color: "from-purple-400 to-pink-400" },
+    { Icon: Zap, value: 24, suffix: "/7", label: "AI Monitoring", color: "from-[#9DDB2C] to-yellow-400" }
   ];
 
   return (
     <section className="py-24 px-6 bg-black border-y border-white/5">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="text-center group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500">
-                <stat.icon className={`w-7 h-7 bg-gradient-to-br ${stat.color} bg-clip-text text-transparent`} />
-              </div>
-              <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-              </div>
-              <div className="text-sm text-zinc-500 uppercase tracking-wider font-medium">{stat.label}</div>
-            </motion.div>
-          ))}
+          {stats.map((stat, i) => {
+            const Icon = stat.Icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="text-center group"
+              >
+               <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500">
+  <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.color}`}>
+    <Icon className="w-7 h-7 text-black" />
+  </div>
+</div>
+
+
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                </div>
+
+                <div className="text-sm text-zinc-500 uppercase tracking-wider font-medium">
+                  {stat.label}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
+
 
 function SecurityBadges() {
   const badges = [
@@ -589,9 +601,17 @@ function SolutionSection() {
             <p className="text-zinc-400 text-lg leading-relaxed">
               Personalized exercises adapt in real-time to performance. No more generic worksheets—just targeted intervention that accelerates progress and adjusts difficulty dynamically.
             </p>
-            <Button variant="outline" className="rounded-full border-white/20 text-white hover:bg-white hover:text-black transition-all h-12 px-8">
-              Explore Methodologies
-            </Button>
+<Button
+  className="rounded-full h-12 px-8 font-medium
+             bg-gradient-to-r from-white/10 to-white/5
+             border border-white/20 backdrop-blur-xl
+             hover:from-white/20 hover:to-white/10
+             transition-all animate-pulse text-white"
+>
+  Explore Methodologies
+</Button>
+
+
           </div>
           <motion.div 
             className="flex-1 w-full aspect-[4/3] relative"
