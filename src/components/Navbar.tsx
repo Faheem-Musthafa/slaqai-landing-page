@@ -69,7 +69,7 @@ export function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 md:pt-5 px-4 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-5 px-3 sm:px-4 pointer-events-none">
       <motion.nav
         layout
         initial={{ width: '100%' }}
@@ -95,8 +95,8 @@ export function Navbar() {
       >
         <div className={`flex items-center justify-between transition-all duration-300 ${
           isScrolled || mobileMenuOpen 
-            ? 'px-5 md:px-7 py-2.5 md:py-3' 
-            : 'px-6 md:px-8 py-4 md:py-4'
+            ? 'px-4 sm:px-5 md:px-7 py-3 md:py-3' 
+            : 'px-4 sm:px-6 md:px-8 py-4 md:py-4'
         }`}>
             
             {/* Logo */}
@@ -159,7 +159,7 @@ export function Navbar() {
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="lg:hidden border-t border-zinc-100"
               >
-                <div className="flex flex-col gap-1 p-4">
+                <div className="flex flex-col gap-1.5 p-5">
                   {NAV_LINKS.map((link, index) => (
                     <motion.div
                       key={link.href}
@@ -170,13 +170,13 @@ export function Navbar() {
                       <a
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-4 py-3 text-[15px] font-medium text-zinc-700 hover:text-black hover:bg-zinc-50 rounded-xl transition-all"
+                        className="block px-4 py-3.5 text-[15px] font-medium text-zinc-700 hover:text-black hover:bg-zinc-50 rounded-xl transition-all"
                       >
                         {link.label}
                       </a>
                     </motion.div>
                   ))}
-                  <div className="h-px bg-zinc-100 my-2" />
+                  <div className="h-px bg-zinc-100 my-3" />
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
