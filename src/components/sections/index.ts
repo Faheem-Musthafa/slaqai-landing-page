@@ -1,0 +1,11 @@
+export { TrustSection } from "./TrustSection";
+export { StatsSection } from "./StatsSection";
+export { SecurityBadges } from "./SecurityBadges";
+export { ProblemSection } from "./ProblemSection";
+export { ProblemCard } from "./ProblemCard";
+export { SolutionSection } from "./SolutionSection";
+export { ComparisonSection } from "./ComparisonSection";
+export { TestSection } from "./TestSection";
+export { TestimonialsSection } from "./TestimonialsSection";
+export { FAQSection } from "./FAQSection";
+export { CTASection } from "./CTASection";

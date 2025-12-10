@@ -47,7 +47,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-slaq-green: #9DDB2C;
+  --color-Zlaqa-green: #9DDB2C;
 }
 
 :root {
@@ -133,24 +133,24 @@ nextjs-portal {
   display: none !important;
 }
 
-/* --- Slaq custom tokens & animations --- */
+/* --- Zlaqa custom tokens & animations --- */
 :root {
-  /* Slaq color tokens (used by components) */
-  --slaq-black: #000000;
-  --slaq-white: #FFFFFF;
-  --slaq-green: #9DDB2C;
-  --slaq-gray: #F5F5F7;
-  --slaq-dark-gray: #1D1D1F;
+  /* Zlaqa color tokens (used by components) */
+  --Zlaqa-black: #000000;
+  --Zlaqa-white: #FFFFFF;
+  --Zlaqa-green: #9DDB2C;
+  --Zlaqa-gray: #F5F5F7;
+  --Zlaqa-dark-gray: #1D1D1F;
 }
 
 /* Utility color helpers for classes referenced in markup */
-.bg-slaq-green { background-color: var(--slaq-green) !important; }
-.text-slaq-green { color: var(--slaq-green) !important; }
-.text-slaq-black { color: var(--slaq-black) !important; }
-.bg-slaq-black { background-color: var(--slaq-black) !important; }
-.text-slaq-white { color: var(--slaq-white) !important; }
-.bg-slaq-gray { background-color: var(--slaq-gray) !important; }
-.text-slaq-darkGray { color: var(--slaq-dark-gray) !important; }
+.bg-Zlaqa-green { background-color: var(--Zlaqa-green) !important; }
+.text-Zlaqa-green { color: var(--Zlaqa-green) !important; }
+.text-Zlaqa-black { color: var(--Zlaqa-black) !important; }
+.bg-Zlaqa-black { background-color: var(--Zlaqa-black) !important; }
+.text-Zlaqa-white { color: var(--Zlaqa-white) !important; }
+.bg-Zlaqa-gray { background-color: var(--Zlaqa-gray) !important; }
+.text-Zlaqa-darkGray { color: var(--Zlaqa-dark-gray) !important; }
 
 /* Keyframes */
 @keyframes shimmer {
@@ -180,4 +180,4 @@ nextjs-portal {
 .animation-delay-2000 { animation-delay: 2s !important; }
 .animation-delay-4000 { animation-delay: 4s !important; }
 
-/* End Slaq custom tokens & animations */
+/* End Zlaqa custom tokens & animations */

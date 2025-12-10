@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Slaq.ai - Smart Linguistic Adaptive Intelligence",
+  title: "Zlaqa.ai - Smart Linguistic Adaptive Intelligence",
   description: "Premium AI-powered linguistic analysis and therapy.",
 };
 
