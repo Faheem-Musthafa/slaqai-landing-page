@@ -25,8 +25,8 @@ export const BRAND_COLORS = {
 // Navigation links
 export const NAV_LINKS = [
   { href: "#problem", label: "Problem" },
-  { href: "#solution", label: "How it Works" },
-  { href: "#test", label: "Free Test" },
+  { href: "#solution", label: "Working" },
+  { href: "#test", label: "TakeTest" },
   { href: "#testimonials", label: "Testimonials" },
   { href: "#faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
@@ -78,12 +78,20 @@ export const COMPARISON_FEATURES = [
 
 // Testimonials data - Industry Leaders
 export const TESTIMONIALS = [
+  // {
+  //   name: "Shibili Rahiman",
+  //   role: "Chairman, RAC Global",
+  //   content: "ZLAQA AI represents a groundbreaking approach to speech therapy. The technology's ability to provide continuous, real-time feedback is exactly what the industry needs to make therapy more accessible and effective.",
+  //   rating: 5,
+  //   image: "SR"
+  // },
   {
-    name: "Shibili Rahiman",
-    role: "Chairman, RAC Global",
-    content: "ZLAQA AI represents a groundbreaking approach to speech therapy. The technology's ability to provide continuous, real-time feedback is exactly what the industry needs to make therapy more accessible and effective.",
+    name: "Coming Soon",
+    role: "Industry Leader",
+    content: "More testimonials from industry experts and healthcare professionals will be added soon. Stay tuned for insights from leading voices in speech therapy and healthcare innovation.",
     rating: 5,
-    image: "SR"
+    image: "CS",
+    comingSoon: true
   },
   {
     name: "Coming Soon",
