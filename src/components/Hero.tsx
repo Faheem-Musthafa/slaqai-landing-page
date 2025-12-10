@@ -48,8 +48,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-5xl md:text-7xl font-bold tracking-tighter text-Zlaqa-black mb-6 leading-[1.1]"
         >
-          Smart Linguistic <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-l text-Zlaqa-black to-gray-400">Adaptive Intelligence.</span>
+          Zero-Barrier <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-l text-Zlaqa-black to-gray-400">Speech Intelligence Platform.</span>
         </motion.h1>
 
         <motion.p 
